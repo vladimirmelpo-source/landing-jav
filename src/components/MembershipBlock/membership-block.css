@@ -77,29 +77,6 @@
   color: var(--membership-accent);
 }
 
-.membership-block__images {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.membership-block__img-wrap {
-  flex: 1;
-  max-width: 180px;
-  aspect-ratio: 3 / 4;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.06);
-}
-
-.membership-block__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 .membership-block__copyright {
   margin: 0;
   font-size: 0.75rem;
@@ -131,13 +108,5 @@
 
   .membership-block__benefit {
     font-size: 0.9375rem;
-  }
-
-  .membership-block__images {
-    gap: 0.75rem;
-  }
-
-  .membership-block__img-wrap {
-    max-width: 220px;
   }
 }

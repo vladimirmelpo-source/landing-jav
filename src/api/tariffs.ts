@@ -1,6 +1,83 @@
 import type { Tariff, TariffsResponse, ServerTariffsResponse, ServerTariffItem } from '@/types/tariff'
 
-/** Хардкод ответа сервера с тарифами */
+/** Конфиг JAVHD: tour, nats, billing API (из env) */
+const JAVHD_TOUR_ID = import.meta.env.VITE_JAVHD_TOUR_ID ?? '581'
+const JAVHD_NATS_CODE = import.meta.env.VITE_JAVHD_NATS_CODE ?? ''
+const JAVHD_BILLING_API = import.meta.env.VITE_JAVHD_BILLING_API ?? ''
+const JAVHD_JOIN_BASE = import.meta.env.VITE_JAVHD_JOIN_BASE ?? 'https://enter.javhd.com/signup'
+const JAVHD_USE_TRACK = import.meta.env.VITE_JAVHD_USE_TRACK === 'true'
+
+/** Строит query-строку для запроса тарифов (структура JAVHD/NATS) */
+function buildTariffsQuery(): string {
+  const params = new URLSearchParams()
+  params.set('tour', JAVHD_TOUR_ID)
+  if (JAVHD_NATS_CODE) params.set('nats', JAVHD_NATS_CODE)
+  return params.toString()
+}
+
+/** Строит URL: track (для атрибуции) или signup с nats, optionid и опционально email */
+export function buildJoinUrl(optionId?: string, email?: string): string {
+  const params = new URLSearchParams()
+  if (optionId) params.set('optionid', optionId)
+  if (email?.trim()) params.set('email', email.trim())
+
+  if (JAVHD_USE_TRACK && JAVHD_NATS_CODE) {
+    const trackBase = 'https://enter.javhd.com/track'
+    const url = `${trackBase}/${JAVHD_NATS_CODE}`
+    const qs = params.toString()
+    return qs ? `${url}?${qs}` : url
+  }
+  params.set('step', 'signup')
+  if (JAVHD_NATS_CODE) params.set('nats', JAVHD_NATS_CODE)
+  const qs = params.toString()
+  const base = JAVHD_JOIN_BASE.replace(/\/?$/, '')
+  return `${base}/signup.php?${qs}`
+}
+
+const SIGNUP_ACTION = 'https://enter.javhd.com/signup/signup.php'
+/** cascade=2 — Credit card. Формат plan[option]: {cascade}-join_by_credit_card-{optionId} */
+const CASCADE_CREDIT_CARD = '2'
+
+/** Отправляет POST-форму на биллера (имитация «Get membership») */
+export function submitToBiller(optionId: string, email?: string): void {
+  const form = document.createElement('form')
+  form.method = 'POST'
+  form.action = SIGNUP_ACTION
+  form.target = '_self'
+  form.style.display = 'none'
+
+  const addField = (name: string, value: string) => {
+    const input = document.createElement('input')
+    input.type = 'hidden'
+    input.name = name
+    input.value = value
+    form.appendChild(input)
+  }
+
+  addField('plan[option]', `${CASCADE_CREDIT_CARD}-join_by_credit_card-${optionId}`)
+  addField('_language', 'en')
+  addField('step', 'signup')
+  addField('formloaded', '1')
+  addField('tpl', 'join')
+  addField('cascade', CASCADE_CREDIT_CARD)
+  addField('signup[reuse_matching_user]', '1')
+  addField('signup[rename_old_member]', '1')
+  addField('signup[random_userpass]', '10:1:5:a')
+  addField('signup[mailok]', '1')
+  addField('signup[custom2]', '')
+  addField('signup[custom3]', '')
+  addField('signup[custom4]', '')
+  addField('signup[custom5]', '')
+  addField('nextra[EPOCH][version]', '3')
+
+  if (JAVHD_NATS_CODE) addField('nats', JAVHD_NATS_CODE)
+  if (email?.trim()) addField('signup[email]', email.trim())
+
+  document.body.appendChild(form)
+  form.submit()
+}
+
+/** Хардкод ответа сервера с тарифами (fallback) */
 const SERVER_TARIFFS_RESPONSE: ServerTariffsResponse = {
   success: true,
   data: {
@@ -207,6 +284,7 @@ function mapServerItemToTariff(item: ServerTariffItem): Tariff {
     dayPrice,
     badges: badges.length ? badges : undefined,
     highlighted: item.is_trial === true,
+    ctaUrl: buildJoinUrl(String(item.optionid)),
     features:
       dayPriceStr && dayPriceStr !== '0.00'
         ? [{ text: `$${dayPriceStr} per day`, included: true }]
@@ -225,7 +303,63 @@ export function getTariffsFromServerResponse(): TariffsResponse {
   }
 }
 
-/** Тарифы: пока отдаём хардкод (без запроса) */
-export function fetchTariffs(): Promise<TariffsResponse> {
-  return Promise.resolve(getTariffsFromServerResponse())
+function parseTariffsResponse(raw: unknown): TariffsResponse {
+  if (raw && typeof raw === 'object') {
+    const obj = raw as Record<string, unknown>
+    if (Array.isArray(obj.items) && obj.items.length > 0) {
+      const first = obj.items[0] as Record<string, unknown>
+      if (first.optionid != null || first.initial != null) {
+        return {
+          items: (obj.items as ServerTariffItem[])
+            .filter((i) => i.hidden !== '1')
+            .map(mapServerItemToTariff),
+        }
+      }
+      return { items: obj.items as Tariff[] }
+    }
+    const data = obj.data as { items?: ServerTariffItem[] } | undefined
+    if (data?.items?.length && obj.success) {
+      return {
+        items: data.items
+          .filter((i) => i.hidden !== '1')
+          .map(mapServerItemToTariff),
+      }
+    }
+  }
+  return { items: [] }
+}
+
+/** Тарифы: запрос при загрузке. Источники: BILLING_API → /api/tariffs → хардкод */
+export async function fetchTariffs(): Promise<TariffsResponse> {
+  const query = buildTariffsQuery()
+
+  const urlsToTry: string[] = []
+  if (JAVHD_BILLING_API) {
+    urlsToTry.push(
+      JAVHD_BILLING_API.includes('?') ? `${JAVHD_BILLING_API}&${query}` : `${JAVHD_BILLING_API}?${query}`
+    )
+  }
+  const apiBase = import.meta.env.VITE_API_BASE ?? ''
+  if (apiBase) {
+    const base = apiBase.replace(/\/?$/, '')
+    urlsToTry.push(`${base}/api/tariffs?${query}`)
+  }
+
+  for (const url of urlsToTry) {
+    try {
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        credentials: 'omit',
+      })
+      if (!res.ok) continue
+      const raw = await res.json()
+      const result = parseTariffsResponse(raw)
+      if (result.items.length > 0) return result
+    } catch {
+      // try next source
+    }
+  }
+
+  return getTariffsFromServerResponse()
 }

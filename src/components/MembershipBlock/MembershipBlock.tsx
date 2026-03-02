@@ -138,11 +138,6 @@ export function MembershipBlock({
         ))}
       </ul>
 
-      <div className="membership-block__images" aria-hidden="true">
-        <div className="membership-block__img-wrap" />
-        <div className="membership-block__img-wrap" />
-      </div>
-
       <p className="membership-block__copyright">{t('membership.copyright')}</p>
     </aside>
 

@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useI18n } from '@/i18n'
 import type { Tariff } from '@/types/tariff'
-import { submitEmailToSheet } from '@/api/subscribe'
+import { submitToBiller } from '@/api/tariffs'
 import './TariffsSection/tariffs-section.css'
 
 interface Props {
@@ -14,15 +14,10 @@ interface Props {
   variant?: 'section' | 'popup'
 }
 
-const PAYMENT_IDS = ['card', 'crypto', 'alipay', 'pay', 'oxxo', 'pix', 'upi'] as const
-
-export function TariffsSection({ items, loading, error, onRegistrationComplete, initialEmail, variant = 'section' }: Props) {
+export function TariffsSection({ items, loading, error, initialEmail, variant = 'section' }: Props) {
   const { t } = useI18n()
   const [email, setEmail] = useState(initialEmail ?? '')
-  const [emailTouched, setEmailTouched] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [selectedId, setSelectedId] = useState<string | null>(null)
-  const [selectedPayment, setSelectedPayment] = useState<string>('card')
 
   useEffect(() => {
     if (items.length && (selectedId === null || !items.some((i) => i.id === selectedId))) {
@@ -30,62 +25,23 @@ export function TariffsSection({ items, loading, error, onRegistrationComplete, 
     }
   }, [items, selectedId])
 
-  const emailInvalid = email.trim() === ''
-  const showEmailError = emailTouched && emailInvalid
-
   const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
-    setEmailTouched(true)
-    if (submitStatus === 'error' || submitStatus === 'success') setSubmitStatus('idle')
-  }, [submitStatus])
-
-  const handleEmailBlur = useCallback(() => {
-    setEmailTouched(true)
   }, [])
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
+    (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      setEmailTouched(true)
-      if (emailInvalid) return
-      setSubmitStatus('loading')
-      const result = await submitEmailToSheet(email.trim())
-      if (result.ok) {
-        setSubmitStatus('success')
-        setEmail('')
-        setEmailTouched(false)
-        onRegistrationComplete?.()
-      } else {
-        setSubmitStatus('error')
-      }
+      const optionId = selectedId ?? items[0]?.id
+      if (!optionId) return
+      submitToBiller(optionId, email.trim() || undefined)
     },
-    [email, emailInvalid, onRegistrationComplete]
+    [email, selectedId, items]
   )
 
   const handleSelectTariff = useCallback((id: string) => {
     setSelectedId(id)
   }, [])
-
-  const getPaymentLabel = (id: string) => {
-    switch (id) {
-      case 'card':
-        return t('tariffs.paymentCard')
-      case 'crypto':
-        return t('tariffs.paymentCrypto')
-      case 'alipay':
-        return t('tariffs.paymentAlipay')
-      case 'pay':
-        return t('tariffs.paymentPay')
-      case 'oxxo':
-        return t('tariffs.paymentOxxo')
-      case 'pix':
-        return t('tariffs.paymentPix')
-      case 'upi':
-        return t('tariffs.paymentUpi')
-      default:
-        return id
-    }
-  }
 
   const sectionId = variant === 'section' ? 'tariffs' : undefined
 
@@ -176,22 +132,8 @@ export function TariffsSection({ items, loading, error, onRegistrationComplete, 
 
         {items.length === 0 && <p className="tariffs-section__empty">{t('tariffs.noTariffs')}</p>}
 
-        <div className="tariffs-section__payments">
-          <p className="tariffs-section__payments-label visually-hidden">{t('header.payment')}</p>
-          <div className="tariffs-section__payments-grid" role="group">
-            {PAYMENT_IDS.map((id) => (
-              <button
-                key={id}
-                type="button"
-                className={`tariffs-section__payment-btn ${selectedPayment === id ? 'tariffs-section__payment-btn--selected' : ''}`}
-                onClick={() => setSelectedPayment(id)}
-                aria-pressed={selectedPayment === id}
-                aria-label={getPaymentLabel(id)}
-              >
-                {getPaymentLabel(id)}
-              </button>
-            ))}
-          </div>
+        <div className="tariffs-section__payments" role="group" aria-label={t('header.payment')}>
+          <span className="tariffs-section__payment-card-only">{t('tariffs.paymentCard')}</span>
         </div>
 
         {variant !== 'popup' && (
@@ -213,38 +155,17 @@ export function TariffsSection({ items, loading, error, onRegistrationComplete, 
                   name="email"
                   value={email}
                   onChange={handleEmailChange}
-                  onBlur={handleEmailBlur}
                   placeholder={t('header.emailPlaceholder')}
-                  className={`tariffs-section__input ${showEmailError ? 'tariffs-section__input--invalid' : ''}`}
-                  required
-                  aria-required="true"
-                  aria-invalid={showEmailError}
-                  aria-describedby={showEmailError ? 'tariffs-email-error' : undefined}
+                  className="tariffs-section__input"
                   autoComplete="email"
                 />
-                {showEmailError && (
-                  <p id="tariffs-email-error" className="tariffs-section__error" role="alert">
-                    {t('header.emailRequired')}
-                  </p>
-                )}
               </div>
-              {submitStatus === 'success' && (
-                <p className="tariffs-section__success" role="status">
-                  {t('tariffs.submitSuccess')}
-                </p>
-              )}
-              {submitStatus === 'error' && (
-                <p className="tariffs-section__error tariffs-section__error--submit" role="alert">
-                  {t('tariffs.submitError')}
-                </p>
-              )}
               <button
                 type="submit"
                 className="tariffs-section__submit"
                 aria-label={t('tariffs.createAccountButton')}
-                disabled={submitStatus === 'loading'}
               >
-                {submitStatus === 'loading' ? '...' : t('tariffs.createAccountButton')}
+                {t('tariffs.createAccountButton')}
               </button>
             </form>
             <p className="tariffs-section__footer-agree">

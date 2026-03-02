@@ -105,6 +105,8 @@
     "paymentPix": "pix",
     "paymentUpi": "UPI",
     "submitSuccess": "Спасибо! Мы свяжемся с вами.",
-    "submitError": "Что-то пошло не так. Попробуйте снова."
+    "submitError": "Что-то пошло не так. Попробуйте снова.",
+    "subscribeNow": "Подписаться",
+    "subscribeAria": "Подписаться с выбранным тарифом"
   }
 }

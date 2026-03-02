@@ -107,5 +107,7 @@ export type Translations = {
     paymentUpi: string
     submitSuccess: string
     submitError: string
+    subscribeNow: string
+    subscribeAria: string
   }
 }

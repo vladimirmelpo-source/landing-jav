@@ -4,7 +4,7 @@ export type SubmitEmailResult =
   | { ok: true }
   | { ok: false; error: string }
 
-/** Form-urlencoded для обхода CORS preflight (simple request). */
+/** Form-urlencoded для simple request (без preflight). */
 export const submitEmailToSheet = async (email: string): Promise<SubmitEmailResult> => {
   if (!WEB_APP_URL) {
     return { ok: false, error: 'Google Sheets Web App URL not configured' }

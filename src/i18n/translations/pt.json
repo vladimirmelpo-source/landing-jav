@@ -105,6 +105,8 @@
     "paymentPix": "pix",
     "paymentUpi": "UPI",
     "submitSuccess": "Obrigado! Entraremos em contato.",
-    "submitError": "Algo deu errado. Tente novamente."
+    "submitError": "Algo deu errado. Tente novamente.",
+    "subscribeNow": "Assinar",
+    "subscribeAria": "Assinar com o plano selecionado"
   }
 }

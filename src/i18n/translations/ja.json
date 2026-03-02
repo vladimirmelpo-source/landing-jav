@@ -105,6 +105,8 @@
     "paymentPix": "pix",
     "paymentUpi": "UPI",
     "submitSuccess": "ありがとうございます。連絡いたします。",
-    "submitError": "エラーが発生しました。もう一度お試しください。"
+    "submitError": "エラーが発生しました。もう一度お試しください。",
+    "subscribeNow": "購読する",
+    "subscribeAria": "選択したプランで購読"
   }
 }

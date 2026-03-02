@@ -105,6 +105,8 @@
     "paymentPix": "pix",
     "paymentUpi": "UPI",
     "submitSuccess": "Thanks! We'll be in touch.",
-    "submitError": "Something went wrong. Please try again."
+    "submitError": "Something went wrong. Please try again.",
+    "subscribeNow": "Subscribe",
+    "subscribeAria": "Subscribe with selected plan"
   }
 }

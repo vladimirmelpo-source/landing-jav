@@ -12,9 +12,14 @@
  * 6. Скопируй URL развёртывания в .env как VITE_GOOGLE_SHEETS_WEB_APP_URL
  */
 
+/** GET для проверки: открой URL в браузере — должно вернуть {"ok":true,"message":"ready"} */
+function doGet() {
+  return createJsonResponse(200, { ok: true, message: 'ready' })
+}
+
 function doPost(e) {
   try {
-    const params = e.parameter
+    const params = e.parameter || {}
     const email = params.email ? String(params.email).trim() : ''
 
     if (!email) {
