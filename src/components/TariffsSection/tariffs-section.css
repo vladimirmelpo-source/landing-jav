@@ -1,0 +1,322 @@
+/* По скрину: панель с закруглениями, вертикальные строки тарифов с радио, бейджи синий/красный, способы оплаты, форма */
+.tariffs-section {
+  --tariffs-bg: #0a0a0a;
+  --tariffs-panel-bg: #1a1a1a;
+  --tariffs-accent: #e64c77;
+  --tariffs-text: #ffffff;
+  --tariffs-text-muted: #9ca3af;
+  --tariffs-error: #ef4444;
+  --tariffs-badge-offer: #3b82f6;
+  --tariffs-badge-discount: #dc2626;
+
+  padding: 1rem 0.75rem;
+  background-color: var(--tariffs-bg);
+  color: var(--tariffs-text);
+}
+
+.tariffs-section__panel {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+  background-color: var(--tariffs-panel-bg);
+  border-radius: 16px;
+}
+
+.tariffs-section__title {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tariffs-text);
+  text-align: center;
+}
+
+/* ——— Строки тарифов (радио слева, название + бейджи, цена/день справа, подпись снизу) ——— */
+.tariffs-section__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.tariffs-section__row {
+  display: flex;
+  align-items: stretch;
+  min-height: 56px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.tariffs-section__row--selected {
+  background-color: rgba(230, 76, 119, 0.15);
+  border-color: rgba(230, 76, 119, 0.4);
+}
+
+.tariffs-section__radio-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 0.75rem;
+}
+
+.tariffs-section__radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.tariffs-section__radio--checked {
+  border-color: var(--tariffs-accent);
+  background-color: var(--tariffs-accent);
+  box-shadow: inset 0 0 0 3px var(--tariffs-panel-bg);
+}
+
+.tariffs-section__row-btn {
+  flex: 1;
+  display: block;
+  width: 100%;
+  padding: 0.6rem 0.75rem 0.6rem 0.5rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tariffs-section__row-btn:focus-visible {
+  outline: none;
+}
+
+.tariffs-section__row-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+}
+
+.tariffs-section__row-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--tariffs-text);
+}
+
+.tariffs-section__badges {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.tariffs-section__badge {
+  padding: 0.15rem 0.4rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.tariffs-section__badge--offer {
+  background-color: var(--tariffs-badge-offer);
+}
+
+.tariffs-section__badge--discount {
+  background-color: var(--tariffs-badge-discount);
+}
+
+.tariffs-section__row-dayprice {
+  margin-left: auto;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--tariffs-text);
+}
+
+.tariffs-section__row-total {
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  color: var(--tariffs-text-muted);
+}
+
+/* ——— Способы оплаты ——— */
+.tariffs-section__payments {
+  margin-bottom: 1.25rem;
+}
+
+.tariffs-section__payments-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.tariffs-section__payment-btn {
+  padding: 0.6rem 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--tariffs-text);
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tariffs-section__payment-btn:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.tariffs-section__payment-btn--selected {
+  border-color: var(--tariffs-accent);
+  box-shadow: 0 0 0 1px var(--tariffs-accent);
+}
+
+.tariffs-section__payment-btn:focus-visible {
+  outline: 2px solid var(--tariffs-accent);
+  outline-offset: 2px;
+}
+
+/* ——— Форма ——— */
+.tariffs-section__form-wrap {
+  margin-top: 0;
+}
+
+.tariffs-section__form-heading {
+  margin: 0 0 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--tariffs-text);
+}
+
+.tariffs-section__form-signin {
+  color: var(--tariffs-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.tariffs-section__form-signin:hover {
+  color: var(--tariffs-accent);
+}
+
+.tariffs-section__form {
+  margin-bottom: 0.75rem;
+}
+
+.tariffs-section__form-row {
+  margin-bottom: 0.5rem;
+}
+
+.tariffs-section__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #111;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.tariffs-section__input::placeholder {
+  color: #6b7280;
+}
+
+.tariffs-section__input:focus {
+  outline: none;
+  border-color: var(--tariffs-accent);
+  box-shadow: 0 0 0 2px rgba(230, 76, 119, 0.25);
+}
+
+.tariffs-section__input--invalid {
+  border-color: var(--tariffs-error);
+}
+
+.tariffs-section__error {
+  margin: 0.25rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--tariffs-error);
+}
+
+.tariffs-section__success {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: #22c55e;
+}
+
+.tariffs-section__submit {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tariffs-text);
+  background-color: var(--tariffs-accent);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tariffs-section__submit:hover {
+  background-color: #d63d68;
+}
+
+.tariffs-section__submit:focus-visible {
+  outline: 2px solid var(--tariffs-text);
+  outline-offset: 2px;
+}
+
+.tariffs-section__submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.tariffs-section__footer-agree {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--tariffs-text-muted);
+  line-height: 1.4;
+}
+
+.tariffs-section__footer-link {
+  color: var(--tariffs-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 1px;
+}
+
+.tariffs-section__footer-link:hover {
+  color: var(--tariffs-accent);
+}
+
+.tariffs-section__loading,
+.tariffs-section__empty,
+.tariffs-section__error-msg {
+  margin: 0;
+  padding: 1rem 0;
+  color: var(--tariffs-text-muted);
+}
+
+.tariffs-section__error-msg {
+  color: var(--tariffs-error);
+}
+
+@media (min-width: 400px) {
+  .tariffs-section__panel {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .tariffs-section__title {
+    font-size: 1.0625rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tariffs-section__payments-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

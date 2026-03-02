@@ -1,0 +1,75 @@
+/* BEM: info-page — страница с юридическим/инфо контентом */
+.info-page {
+  --info-bg: #1a1a1a;
+  --info-text: #ffffff;
+  --info-text-muted: #9ca3af;
+  --info-accent: #e64c77;
+  --info-border: rgba(255, 255, 255, 0.08);
+
+  min-height: 100vh;
+  background-color: var(--info-bg);
+  color: var(--info-text);
+  padding: 1rem 1.5rem 2rem;
+}
+
+.info-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 0;
+  color: var(--info-accent);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 8px;
+  transition: opacity 0.2s;
+}
+
+.info-page__back:hover,
+.info-page__back:focus-visible {
+  opacity: 0.9;
+  outline: 2px solid var(--info-accent);
+  outline-offset: 2px;
+}
+
+.info-page__back-arrow {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.info-page__content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.info-page__title {
+  margin: 0 0 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.info-page__body {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--info-text-muted);
+}
+
+.info-page__body p {
+  margin: 0 0 1rem;
+}
+
+.info-page__body p:last-child {
+  margin-bottom: 0;
+}
+
+.info-page__body a {
+  color: var(--info-accent);
+  text-decoration: underline;
+}
+
+.info-page__body a:hover {
+  opacity: 0.9;
+}

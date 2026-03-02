@@ -1,0 +1,62 @@
+* {
+  box-sizing: border-box;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+main {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.hero {
+  padding: 2rem;
+  text-align: center;
+}
+
+.error {
+  color: #c00;
+}
+
+.tariffs-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 0.75rem 2rem;
+}
+
+.tariffs-page__back {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  color: #e64c77;
+  background: transparent;
+  border: 1px solid #e64c77;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tariffs-page__back:hover,
+.tariffs-page__back:focus-visible {
+  background: rgba(230, 76, 119, 0.15);
+  outline: none;
+}

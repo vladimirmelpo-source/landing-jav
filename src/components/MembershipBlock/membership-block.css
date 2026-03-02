@@ -1,0 +1,143 @@
+/* BEM: membership-block — CTA блок после видео, тёмная тема, розовый акцент */
+.membership-block {
+  --membership-bg: #0d0d0d;
+  --membership-accent: #e64c77;
+  --membership-text: #ffffff;
+  --membership-text-muted: #9ca3af;
+
+  padding: 1.5rem 1rem 2rem;
+  margin: 0 -0.25rem 1.5rem;
+  background-color: var(--membership-bg);
+  border-radius: 16px;
+  color: var(--membership-text);
+}
+
+.membership-block__title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.membership-block__title-accent {
+  color: var(--membership-accent);
+}
+
+.membership-block__cta {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 1.5rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--membership-text);
+  background-color: var(--membership-accent);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.membership-block__cta:hover {
+  background-color: #d63d68;
+}
+
+.membership-block__cta:focus-visible {
+  outline: 2px solid var(--membership-text);
+  outline-offset: 2px;
+}
+
+.membership-block__benefits {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.membership-block__benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--membership-text);
+}
+
+.membership-block__benefit-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--membership-accent);
+}
+
+.membership-block__images {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.membership-block__img-wrap {
+  flex: 1;
+  max-width: 180px;
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.membership-block__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.membership-block__copyright {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--membership-text-muted);
+  text-align: center;
+}
+
+@media (min-width: 480px) {
+  .membership-block {
+    padding: 2rem 1.5rem 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .membership-block__title {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .membership-block__cta {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .membership-block__benefits {
+    gap: 0.7rem;
+    margin-bottom: 2rem;
+  }
+
+  .membership-block__benefit {
+    font-size: 0.9375rem;
+  }
+
+  .membership-block__images {
+    gap: 0.75rem;
+  }
+
+  .membership-block__img-wrap {
+    max-width: 220px;
+  }
+}

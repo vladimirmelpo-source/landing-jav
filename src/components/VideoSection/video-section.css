@@ -1,0 +1,383 @@
+/* BEM: video-section — блок «Выбранное видео» + список других, mobile-first, тёмная тема */
+.video-section {
+  --video-bg: #121212;
+  --video-card-bg: #1a1a1a;
+  --video-accent: #e64c77;
+  --video-text: #ffffff;
+  --video-text-muted: #9ca3af;
+
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 0.75rem 2rem;
+  background-color: var(--video-bg);
+  color: var(--video-text);
+  overflow-x: hidden;
+}
+
+.video-section__error,
+.video-section__loading,
+.video-section__empty {
+  margin: 0;
+  padding: 1rem;
+  color: var(--video-text-muted);
+}
+
+.video-section__error {
+  color: #ef4444;
+}
+
+/* ——— Выбранное видео ——— */
+.video-section__featured {
+  margin-bottom: 1.5rem;
+}
+
+.video-section__preview-wrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.video-section__preview-inner {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.video-section__preview-img,
+.video-section__preview-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  vertical-align: middle;
+}
+
+.video-section__preview-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.75rem;
+  pointer-events: none;
+}
+
+.video-section__preview-controls .video-section__preview-btn {
+  pointer-events: auto;
+}
+
+.video-section__preview-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  color: var(--video-text);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.video-section__preview-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.video-section__preview-btn:focus-visible {
+  outline: 2px solid var(--video-accent);
+  outline-offset: 2px;
+}
+
+.video-section__preview-btn--close {
+  margin-left: auto;
+}
+
+.video-section__preview-icon-svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Карточка под превью */
+.video-section__card {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  margin-top: -0.25rem;
+}
+
+.video-section__card-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--video-accent);
+  color: var(--video-text);
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.video-section__card-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.video-section__card-title {
+  margin: 0 0 0.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--video-text);
+}
+
+.video-section__card-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.video-section__card-tag {
+  font-size: 0.75rem;
+  color: var(--video-text-muted);
+  padding: 0.15em 0.5em;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.video-section__card-channel {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--video-text-muted);
+}
+
+/* CTA */
+.video-section__cta {
+  display: inline-block;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-decoration: none;
+  color: var(--video-text);
+  background-color: var(--video-accent);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+.video-section__cta:hover {
+  background-color: #d63d68;
+}
+
+.video-section__cta:focus-visible {
+  outline: 2px solid var(--video-text);
+  outline-offset: 2px;
+}
+
+/* Слот между выбранным видео и списком (тарифы и т.д.) */
+.video-section__slot {
+  margin-bottom: 2rem;
+}
+
+/* ——— Рекомендуемые видео (Related videos) ——— */
+.video-section__others-title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--video-text);
+  letter-spacing: -0.02em;
+}
+
+.video-section__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.video-section__tile {
+  margin: 0;
+  min-width: 0;
+}
+
+.video-section__tile-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.video-section__tile-btn:hover {
+  opacity: 0.95;
+}
+
+.video-section__tile-btn:focus-visible {
+  outline: 2px solid var(--video-accent);
+  outline-offset: 2px;
+}
+
+.video-section__tile--selected .video-section__tile-btn {
+  outline: 2px solid var(--video-accent);
+  outline-offset: 2px;
+}
+
+/* Превью: почти квадрат, скруглённые углы */
+.video-section__tile-media {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.video-section__tile-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+  vertical-align: middle;
+}
+
+/* Ряд под превью: аватар наезжает на превью, справа заголовок и описание */
+.video-section__tile-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: -1.25rem;
+  padding: 0 0.15rem 0 0.35rem;
+  position: relative;
+  z-index: 1;
+}
+
+.video-section__tile-avatar {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: var(--video-card-bg);
+  color: var(--video-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.video-section__tile-avatar-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--video-text-muted);
+}
+
+.video-section__tile-body {
+  min-width: 0;
+  flex: 1;
+  padding-top: 0.1rem;
+}
+
+.video-section__tile-title {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--video-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.video-section__tile-desc {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--video-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .video-section {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  .video-section__card-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 1.125rem;
+  }
+
+  .video-section__card-title {
+    font-size: 1rem;
+  }
+
+  .video-section__others-title {
+    font-size: 1.375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .video-section__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 0.75rem;
+  }
+
+  .video-section__tile-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.875rem;
+  }
+
+  .video-section__tile-avatar-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .video-section__tile-info {
+    margin-top: -1.5rem;
+  }
+
+  .video-section__tile-title {
+    font-size: 0.875rem;
+  }
+
+  .video-section__tile-desc {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .video-section__grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}

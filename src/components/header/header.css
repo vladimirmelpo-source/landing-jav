@@ -1,0 +1,493 @@
+/* BEM: header — mobile-first, тёмная шапка с закруглёнными верхними углами */
+.header {
+  --header-bg: #1a1a1a;
+  --header-accent: #e64c77;
+  --header-text: #ffffff;
+  --header-text-muted: #9ca3af;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  padding: 0 1rem;
+  background-color: var(--header-bg);
+  border-radius: 16px 16px 0 0;
+  margin: 0 0.75rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header__lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  margin: 0 -0.5rem;
+  background: none;
+  border: none;
+  color: var(--header-text);
+  cursor: pointer;
+  border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header__lang-trigger:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.header__lang-trigger:focus-visible {
+  outline: 2px solid var(--header-accent);
+  outline-offset: 2px;
+}
+
+.header__lang-flag {
+  width: 24px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.header__lang-arrow {
+  width: 12px;
+  height: 12px;
+  color: var(--header-text-muted);
+  transition: transform 0.2s;
+}
+
+.header__lang--open .header__lang-arrow {
+  transform: rotate(180deg);
+}
+
+.header__lang-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 1rem;
+  margin-top: 4px;
+  min-width: 160px;
+  padding: 0.5rem 0;
+  background-color: #252525;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  list-style: none;
+  margin-left: 0;
+  z-index: 102;
+}
+
+.header__lang-option {
+  display: block;
+  width: 100%;
+  padding: 0.625rem 1rem;
+  background: none;
+  border: none;
+  color: var(--header-text);
+  font-size: 0.9375rem;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header__lang-option:hover,
+.header__lang-option:focus-visible {
+  background-color: rgba(255, 255, 255, 0.08);
+  outline: none;
+}
+
+.header__lang-option--active {
+  color: var(--header-accent);
+  font-weight: 600;
+}
+
+/* Логотип JAV + HD */
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  margin: 0 -0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--header-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header__logo:hover {
+  opacity: 0.9;
+}
+
+.header__logo:focus-visible {
+  outline: 2px solid var(--header-accent);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.header__logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15em 0.4em;
+  font-size: 0.5em;
+  font-weight: 700;
+  line-height: 1;
+  background-color: var(--header-accent);
+  color: var(--header-text);
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-left: 0.1em;
+}
+
+/* Бургер */
+.header__burger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0 -0.5rem;
+  background: none;
+  border: none;
+  color: var(--header-text-muted);
+  cursor: pointer;
+  border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header__burger:hover {
+  color: var(--header-text);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.header__burger:focus-visible {
+  outline: 2px solid var(--header-accent);
+  outline-offset: 2px;
+}
+
+.header__burger-icon {
+  width: 24px;
+  height: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header__burger-icon span {
+  display: block;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+  width: 100%;
+}
+
+/* Оверлей и панель бургер-меню */
+.header__menu-overlay {
+  position: fixed;
+  inset: 0;
+  top: 56px;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.header__menu-overlay--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header__menu-panel {
+  position: fixed;
+  top: 56px;
+  right: 0;
+  bottom: 0;
+  z-index: 101;
+  width: min(280px, 85vw);
+  padding: 1.5rem;
+  padding-right: 3rem;
+  background-color: #151515;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+  transform: translateX(100%);
+  transition: transform 0.25s ease-out;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.header__menu-panel--open {
+  transform: translateX(0);
+}
+
+.header__menu-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--header-text);
+  margin-bottom: 1rem;
+}
+
+.header__menu-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--header-text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header__menu-close:hover {
+  color: var(--header-text);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.header__menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.header__menu-item {
+  padding: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header__menu-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0;
+  color: var(--header-text);
+  font-size: 1rem;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header__menu-link:hover {
+  color: var(--header-accent);
+}
+
+.header__menu-link--btn {
+  font-weight: 500;
+}
+
+.header__menu-link--categories {
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.header__menu-icon {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.header__menu-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--header-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.header__menu-divider {
+  height: 1px;
+  margin: 0.35rem 0;
+  padding: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  list-style: none;
+  border: none;
+}
+
+.header__menu-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header__menu-footer-link,
+.header__menu-footer-text a {
+  color: var(--header-accent);
+  font-size: 0.8125rem;
+  text-decoration: none;
+}
+
+.header__menu-footer-link:hover,
+.header__menu-footer-text a:hover {
+  text-decoration: underline;
+}
+
+.header__menu-footer-text {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: var(--header-text-muted);
+  line-height: 1.5;
+}
+
+/* Модалка формы оплаты */
+.header__payment-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.header__payment-overlay--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header__payment-modal {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  padding: 1.5rem;
+  background-color: #252525;
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.header__payment-title {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--header-text);
+}
+
+.header__payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.header__payment-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.header__payment-label {
+  font-size: 0.875rem;
+  color: var(--header-text-muted);
+}
+
+.header__payment-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--header-text);
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.header__payment-input::placeholder {
+  color: var(--header-text-muted);
+}
+
+.header__payment-input:focus {
+  outline: none;
+  border-color: var(--header-accent);
+}
+
+.header__payment-error {
+  font-size: 0.8125rem;
+  color: #ef4444;
+  margin: 0;
+}
+
+.header__payment-success {
+  font-size: 0.875rem;
+  color: #22c55e;
+  margin: 0;
+}
+
+.header__payment-submit {
+  padding: 0.875rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--header-text);
+  background-color: var(--header-accent);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header__payment-submit:hover:not(:disabled) {
+  background-color: #d63d68;
+}
+
+.header__payment-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.header__payment-submit:focus-visible {
+  outline: 2px solid var(--header-text);
+  outline-offset: 2px;
+}
+
+.header__payment-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--header-text-muted);
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.header__payment-close:hover {
+  color: var(--header-text);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.header__payment-close:focus-visible {
+  outline: 2px solid var(--header-accent);
+  outline-offset: 2px;
+}
+
+/* Контейнер для позиционирования dropdown относительно левой кнопки */
+.header__lang-wrap {
+  position: relative;
+}
